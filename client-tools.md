@@ -59,10 +59,10 @@ the WLCG Authorization Working Group's requirements for a command line tool that
     1. Reuse access token workflow
         1. If there is an existing unexpired access token (which are short-lived, about an hour) on the local disk, htgettoken simply verifies that it has some time remaining and does no more
     1. Reuse vault token workflow
-        1. If an access token is expired but the vault token is not (longer lived, about a week), htgettoken asks Vault for a new access token, exactly like step a-iii above 
+        1. If an access token is expired but the vault token is not (longer lived, about a week), htgettoken asks Vault for a new access token, exactly like step I-c above 
     1. Kerberos authentication workflow
         1. If there is no valid vault token but there is a stored subject name and Kerberos credentials available, htgettoken does Kerberos authentication with vault to obtain a new vault token and stores it
-        1. htgettoken asks Vault for a new access token, exactly like step a-iii above
+        1. htgettoken asks Vault for a new access token, exactly like step I-c above
 1. Job management servers can be issued separate vault tokens to be able to obtain new access tokens on behalf of users  
 See separate [google doc](https://docs.google.com/presentation/d/19BosYQ-OKlSwNkHe9j1Oc1-zi38gyiDcGEyu7WDRjVo/edit#slide=id.p) with detailed diagrams of flows
 
