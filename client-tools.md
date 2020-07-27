@@ -1,7 +1,7 @@
 # Client Tools for WLCG Tokens: Technical Investigation 
 _Authored by the WLCG AuthZ Working Group_
 
-**Pending v0.1** 
+**Pending v0.1 27.07.2020**
 
 This document is to record requirements and discussions regarding Client and Command Line Tools for token based WLCG use. 
 It will be used to help the WLCG Authorization Working Group decide on the future path for client tools and define any necessary enhancement work.
@@ -11,11 +11,12 @@ Public Clients does not preclude their use in other suitable situations (such as
 
 ## Introduction
 In the X.509 based WLCG infrastructure, users were able to install a Grid User Certificate (valid for one year) and generate proxies on demand using a tool called ``voms-proxy-init`` 
-that authenticated the user, checked authorisations against VOMs and produced an X.509 proxy with authorisation extensions. In the OAuth based WLCG Infrastructure there is no direct 
-equivalent for such a flow. Users may have Access Tokens (granting them access to OAuth protected WLCG Resources) but they are only valid for 20 minutes. Clients can store Refresh 
-Tokens on behalf of users and use them to request additional Access Tokens when required. As such, there must be a client interacting with the Users to provision Access 
-Tokens on demand. A further is providing Users with initial Access Tokens required for many flows; unless Users are stored in an LDAP known by the Authorization Server a round trip to a browser 
-is required to authenticate the User. An acceptable balance must be found in terms of User Friendliness in the frequency of these browser flows. 
+that authenticated the user, checked authorisations against VOMS and produced an X.509 proxy with authorisation extensions. In the new OAuth based WLCG Infrastructure there is no direct 
+equivalent for such a flow. Access Tokens (which grant access to OAuth protected WLCG Resources) may be held directly by Users, but are only valid for 20 minutes. Clients (typically secure services) can store Refresh 
+Tokens on behalf of Users and use them to request additional Access Tokens when required. Consequently, there must be a Client interacting with the Users to provision Access 
+Tokens on demand. A further challenge is providing Users with initial Access Tokens required for many flows; unless Users are stored in an LDAP known by the Authorization Server a round trip to a browser 
+is required to authenticate the User. An acceptable balance must be found in terms of User Friendliness in the frequency of these browser flows. This document pulls together
+the WLCG Authorization Working Group's requirements for a command line tool that provisions Users with Access Tokens, and identifies relevant tools.
 
 ## Glossary/Terminology
 
@@ -51,7 +52,6 @@ is required to authenticate the User. An acceptable balance must be found in ter
 
 1. Vault server is statically registered with token issuer as an Oauth client, and client is configured on the Vault server oidc plugin in a vault role (which is typically a VO name)
 1. User runs htgettoken to obtain an access token, passing the vault role name and Vault server name, which depending on status runs through one of 4 different workflows:
-
     1. OIDC authentication workflow
         1. If no other flow below is available, htgettoken contacts Vault with an OIDC device flow request for the vault role, which interacts with token issuer and user’s web browser and returns an Oauth refresh token and Oauth subject name. Vault returns those to htgettoken along with a vault token that has privileges to write and read paths in Vault that include the subject name (and no other paths).  htgettoken stores the vault token in /tmp and stores the subject name for the role under $HOME/.config/htgettoken.
         1. htgettoken uses the vault token to store the refresh token back in Vault oauth secrets plugin at a path based on the subject name and vault role 
@@ -63,7 +63,6 @@ is required to authenticate the User. An acceptable balance must be found in ter
     1. Kerberos authentication workflow
         1. If there is no valid vault token but there is a stored subject name and Kerberos credentials available, htgettoken does Kerberos authentication with vault to obtain a new vault token and stores it
         1. htgettoken asks Vault for a new access token, exactly like step a-iii above
-    
 1. Job management servers can be issued separate vault tokens to be able to obtain new access tokens on behalf of users  
 See separate [google doc](https://docs.google.com/presentation/d/19BosYQ-OKlSwNkHe9j1Oc1-zi38gyiDcGEyu7WDRjVo/edit#slide=id.p) with detailed diagrams of flows
 
