@@ -44,9 +44,9 @@ the WLCG Authorization Working Group's requirements for a command line tool that
 
 | Tool | Status | Comment |
 | -- | -- | --- |
-| oidc-agent | https://github.com/indigo-dc/oidc-agent | Active deployment. Does not support restricted audience. Additional password required. |
+| oidc-agent | https://github.com/indigo-dc/oidc-agent | <ul><li>Supports restricted audiences.</li><li>Supports external password stores to mitigate the additional password requirement. </ul>|
 | Vault with htgettoken | https://www.vaultproject.io and  ­https://github.com/DrDaveD/htgettoken | Demo to WG on 23rd of July. Fulfils most requirements, missing support for requested scopes and audiences |
-| oidc-agent with my-token | Planned | Proposed tool, enhancing oidc-agent. Would allow central store for tokens | 
+| oidc-agent with my-token | Planned first release: Mid 2021 | <ul><li>Proposed tool, enhancing oidc-agent.</li><li>Central store for tokens</li><li>fine grained management of audiences, scopes, expiry and locations. </ul>| 
 
 ### Vault with htgettoken Workflows
 
@@ -76,4 +76,10 @@ See separate [google doc](https://docs.google.com/presentation/d/19BosYQ-OKlSwNk
 1. Script obtains Refresh Token using client ID and Secret - client ID, Secret and Refresh Token are stored on disk and encrypted using an additional passphrase supplied by the user
 1. New access tokens can be obtained using the refresh token stored in oidc-agent
 
-_Note: the user will need to go to the web browser twice.   When oidc-agent is restarted, the user is required to supply the decryption passphrase._
+Note1: Depending on OP restrictions the user may need to go to the web browser twice during the setup flow.
+
+Note2: When oidc-agent is restarted, the user is required to supply the decryption passphrase.
+ This passphrase can be stored in
+   - a (kerberised) keystore
+   - a file (not recommended)
+
