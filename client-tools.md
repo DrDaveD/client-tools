@@ -76,7 +76,7 @@ See separate [google doc](https://docs.google.com/presentation/d/19BosYQ-OKlSwNk
 1. Script obtains Refresh Token using client ID and Secret - client ID, Secret and Refresh Token are stored on disk and encrypted using an additional passphrase supplied by the user
 1. New access tokens can be obtained using the refresh token stored in oidc-agent
 
-Note1: Depending on OP restrictions the user may need to go to the web browser twice during the setup flow.
+Note1: Depending on OP restrictions the user may need to go to the web browser twice during the setup flow. The SSO should make this pretty much transparent, though.
 
 Note2: When oidc-agent is restarted, the user is required to supply the decryption passphrase.
  This passphrase can be stored in
