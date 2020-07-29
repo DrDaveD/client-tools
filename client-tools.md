@@ -12,7 +12,7 @@ Public Clients does not preclude their use in other suitable situations (such as
 ## Introduction
 In the X.509 based WLCG infrastructure, users were able to install a Grid User Certificate (valid for one year) and generate proxies on demand using a tool called ``voms-proxy-init`` 
 that authenticated the user, checked authorisations against VOMS and produced an X.509 proxy with authorisation extensions. In the new OAuth based WLCG Infrastructure there is no direct 
-equivalent for such a flow. Access Tokens (which grant access to OAuth protected WLCG Resources) may be held directly by Users, but are only valid for a short period of time (a few minutes to several hours). Clients (which typically are secure services themselves) can store Refresh 
+equivalent for such a flow. Access Tokens (which grant access to OAuth-protected WLCG Resources) may be held directly by Users, but are only valid for a short period of time (a few minutes to several hours). Clients (which typically are secure services themselves) can store Refresh 
 Tokens on behalf of Users and use them to request additional Access Tokens when required. Consequently, there must be a Client interacting with the Users to provision Access 
 Tokens on demand. A further challenge is providing Users with initial Access Tokens required for many flows; unless Users are recorded e.g. in an LDAP service trusted by the Authorization Server, a round trip to a browser 
 is required to authenticate the User. An acceptable balance must be found in terms of User Friendliness in the frequency of these browser flows. This document pulls together
@@ -46,7 +46,7 @@ the WLCG Authorization Working Group's requirements for a command line tool that
 | Tool | Status | Comment |
 | -- | -- | --- |
 | oidc-agent | https://github.com/indigo-dc/oidc-agent | Active deployment. Does not support restricted audience. Additional password required. |
-| Vault with htgettoken | https://www.vaultproject.io and  ­https://github.com/DrDaveD/htgettoken | Demo to WG on 23rd of July. Fulfils most requirements, missing support for requested scopes and audiences |
+| Vault with htgettoken | https://www.vaultproject.io and  ­https://github.com/fermitools/htgettoken | Demo to WG on 23rd of July. Fulfils most requirements.  Missing support for requested scopes and audiences at that time, planned to be added. |
 | oidc-agent with my-token | Planned | Proposed tool, enhancing oidc-agent. Would allow central store for tokens | 
 
 ### Vault with htgettoken Workflows
@@ -74,7 +74,8 @@ See separate [google doc](https://docs.google.com/presentation/d/19BosYQ-OKlSwNk
     1. Script uses Access Token to register a new Dynamic Client
 1. Authorization Server returns client ID and Secret
 1. Script adds Client ID and Secret to oidc-agent configuration
-1. Script obtains Refresh Token using client ID and Secret - client ID, Secret and Refresh Token are stored on disk and encrypted using an additional passphrase supplied by the user
+1. Script obtains Refresh Token using client ID and Secret and an authorization in the browser
+1. Client ID, Secret and Refresh Token are stored on disk and encrypted using an additional passphrase supplied by the user
 1. New access tokens can be obtained using the refresh token stored in oidc-agent
 
 _Note: the user will need to go to the web browser twice.   When oidc-agent is restarted, the user is required to supply the decryption passphrase._
