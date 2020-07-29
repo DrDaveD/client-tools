@@ -12,7 +12,7 @@ Public Clients does not preclude their use in other suitable situations (such as
 ## Introduction
 In the X.509 based WLCG infrastructure, users were able to install a Grid User Certificate (valid for one year) and generate proxies on demand using a tool called ``voms-proxy-init`` 
 that authenticated the user, checked authorisations against VOMS and produced an X.509 proxy with authorisation extensions. In the new OAuth based WLCG Infrastructure there is no direct 
-equivalent for such a flow. Access Tokens (which grant access to OAuth protected WLCG Resources) may be held directly by Users, but are only valid for 20 minutes. Clients (typically secure services) can store Refresh 
+equivalent for such a flow. Access Tokens (which grant access to OAuth protected WLCG Resources) may be held directly by Users, but are only valid for a short period of time (a few minutes to several hours). Clients (typically secure services) can store Refresh 
 Tokens on behalf of Users and use them to request additional Access Tokens when required. Consequently, there must be a Client interacting with the Users to provision Access 
 Tokens on demand. A further challenge is providing Users with initial Access Tokens required for many flows; unless Users are stored in an LDAP known by the Authorization Server a round trip to a browser 
 is required to authenticate the User. An acceptable balance must be found in terms of User Friendliness in the frequency of these browser flows. This document pulls together
@@ -59,10 +59,10 @@ the WLCG Authorization Working Group's requirements for a command line tool that
     1. Reuse access token workflow
         1. If there is an existing unexpired access token (which are short-lived, about an hour) on the local disk, htgettoken simply verifies that it has some time remaining and does no more
     1. Reuse vault token workflow
-        1. If an access token is expired but the vault token is not (longer lived, about a week), htgettoken asks Vault for a new access token, exactly like step a-iii above 
+        1. If an access token is expired but the vault token is not (longer lived, about a week), htgettoken asks Vault for a new access token, exactly like step I-c above 
     1. Kerberos authentication workflow
         1. If there is no valid vault token but there is a stored subject name and Kerberos credentials available, htgettoken does Kerberos authentication with vault to obtain a new vault token and stores it
-        1. htgettoken asks Vault for a new access token, exactly like step a-iii above
+        1. htgettoken asks Vault for a new access token, exactly like step I-c above
 1. Job management servers can be issued separate vault tokens to be able to obtain new access tokens on behalf of users  
 See separate [google doc](https://docs.google.com/presentation/d/19BosYQ-OKlSwNkHe9j1Oc1-zi38gyiDcGEyu7WDRjVo/edit#slide=id.p) with detailed diagrams of flows
 
