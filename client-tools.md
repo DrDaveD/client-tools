@@ -12,7 +12,7 @@ Public Clients does not preclude their use in other suitable situations (such as
 ## Introduction
 In the X.509 based WLCG infrastructure, users were able to install a Grid User Certificate (valid for one year) and generate proxies on demand using a tool called ``voms-proxy-init`` 
 that authenticated the user, checked authorisations against VOMS and produced an X.509 proxy with authorisation extensions. In the new OAuth based WLCG Infrastructure there is no direct 
-equivalent for such a flow. Access Tokens (which grant access to OAuth protected WLCG Resources) may be held directly by Users, but are only valid for 20 minutes. Clients (which typically are secure services themselves) can store Refresh 
+equivalent for such a flow. Access Tokens (which grant access to OAuth protected WLCG Resources) may be held directly by Users, but are only valid for a short period of time (a few minutes to several hours). Clients (which typically are secure services themselves) can store Refresh 
 Tokens on behalf of Users and use them to request additional Access Tokens when required. Consequently, there must be a Client interacting with the Users to provision Access 
 Tokens on demand. A further challenge is providing Users with initial Access Tokens required for many flows; unless Users are recorded e.g. in an LDAP service trusted by the Authorization Server, a round trip to a browser 
 is required to authenticate the User. An acceptable balance must be found in terms of User Friendliness in the frequency of these browser flows. This document pulls together
